@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Control de Asistencia</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d6efd">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-4 text-center" id="app">
+    <div class="spinner-border text-primary" id="loading"></div>
+    <div id="contenido"></div>
+  </div>
+
+  <script>
+   const API_URL = "https://script.google.com/macros/s/AKfycbzp3-0iAT_efH8KAkaEM4E5OXbEina6uQKp5QNf4wDXNpi5dCuW-TDQxTqtVRdaRf1/exec";
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const p = new URLSearchParams(window.location.search);
+      fetch(`${API_URL}?t=${p.get('t')||''}&uid=${p.get('uid')||''}`)
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('contenido').innerHTML = `<h3>Bienvenido: ${data.alumno || data.tutor || 'Usuario'}</h3>`;
+        });
+    });
+  </script 
+</body>
+</html>
