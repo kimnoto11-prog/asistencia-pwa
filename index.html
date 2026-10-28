@@ -15,7 +15,8 @@
   </div>
 
   <script>
-   const API_URL = "https://script.google.com/macros/s/AKfycbzp3-0iAT_efH8KAkaEM4E5OXbEina6uQKp5QNf4wDXNpi5dCuW-TDQxTqtVRdaRf1/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzFVJO6dTxY__aSBuJ1x-yCIQqscY6En0NihIpn_g5U0d2XSETK_Ng5eG2ZGEpRhn4f/exec";
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
@@ -29,6 +30,6 @@
           document.getElementById('contenido').innerHTML = `<h3>Bienvenido: ${data.alumno || data.tutor || 'Usuario'}</h3>`;
         });
     });
-  </script 
+  </script>
 </body>
 </html>
