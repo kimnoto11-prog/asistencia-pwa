@@ -23,11 +23,32 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const p = new URLSearchParams(window.location.search);
-      fetch(`${API_URL}?t=${p.get('t')||''}&uid=${p.get('uid')||''}`)
+      const tipo = p.get('t') || '';
+      const uid = p.get('uid') || '';
+
+      fetch(`${API_URL}?t=${tipo}&uid=${uid}`)
         .then(r => r.json())
         .then(data => {
           document.getElementById('loading').style.display = 'none';
-          document.getElementById('contenido').innerHTML = `<h3>Bienvenido: ${data.alumno || data.tutor || 'Usuario'}</h3>`;
+          
+          let nombre = data.alumno || data.tutor;
+          let det = data.grupo || data.estudiante || '';
+
+          if (nombre) {
+            document.getElementById('contenido').innerHTML = `
+              <h3>Bienvenido: ${nombre}</h3>
+              ${det ? `<p class="text-muted">${det}</p>` : ''}
+            `;
+          } else {
+            document.getElementById('contenido').innerHTML = `
+              <h3 class="text-danger">Registro no encontrado</h3>
+              <p class="text-muted">${data.mensaje || data.error || 'Verifica los datos'}</p>
+            `;
+          }
+        })
+        .catch(err => {
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('contenido').innerHTML = `<h3 class="text-danger">Error de conexión</h3>`;
         });
     });
   </script>
